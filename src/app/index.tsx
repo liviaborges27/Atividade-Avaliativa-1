@@ -1,8 +1,10 @@
-import React from "react";
-import PokemonSearch from "../components/PokemonSearch";
+import { View } from 'react-native';
+import PokemonSearch from '../components/PokemonSearch';
 
 export default function Index() {
   return (
-    <PokemonSearch />
+    <View style={{ flex: 1 }}>
+      <PokemonSearch />
+    </View>
   );
 }

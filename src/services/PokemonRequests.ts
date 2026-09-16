@@ -42,6 +42,7 @@ class Requests {
                 pokemon_name: '',
                 pokemon_id: 0,
                 pokemon_image: '',
+                pokemon_shiny_image: '',
                 description: '',
                 types: [] as string[]
             };
@@ -49,9 +50,12 @@ class Requests {
 
             if (api_response.ok) {
                 const pokemon_info = await api_response.json();
+                const showdownSprite = pokemon_info.sprites?.other?.showdown ?? {};
+
                 pokemon.pokemon_name = pokemon_info.name;
                 pokemon.pokemon_id = pokemon_info.id;
-                pokemon.pokemon_image = `${this.image_url}${pokemon.pokemon_id}.gif`;
+                pokemon.pokemon_image = showdownSprite.front_default || pokemon_info.sprites?.front_default || `${this.image_url}${pokemon.pokemon_id}.gif`;
+                pokemon.pokemon_shiny_image = showdownSprite.front_shiny || pokemon_info.sprites?.front_shiny || pokemon.pokemon_image;
                 pokemon.types = pokemon_info.types.map((t: any) => t.type.name);
 
                 // Fetch Pokemon species description
